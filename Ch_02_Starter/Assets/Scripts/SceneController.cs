@@ -10,6 +10,6 @@ public class SceneController : MonoBehaviour
 
     private void Start()
     {
-        start.onClick.AddListener(GenericManager.Instance.StartGame);
+        start.onClick.AddListener(SOManager.Instance.StartGame);
     }
 }
