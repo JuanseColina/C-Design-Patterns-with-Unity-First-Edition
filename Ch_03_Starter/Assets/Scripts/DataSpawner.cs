@@ -6,21 +6,24 @@ public class DataSpawner : MonoBehaviour
 {
     void Start()
     {
-        Enemy ogre = new Enemy(10, "RAWR", "Ogre");
-        ogre.Print();
-        IPrototype clonedPrototype = ogre.ShallowClone();
-
-        if (clonedPrototype is Enemy clonedEnemy)
+        Factory<IPrototype> factory = new Factory<IPrototype>();
+        //2
+        factory["Ogre"] = new Enemy(10,"RAWR", "Ogre", new Item("Poison dart"));
+        factory["Knight"] = new Enemy(15, "To Arms!", "Ash Knight", new Item("Shuriken"));
+        
+        //3
+        IPrototype ogrePrototype = (Enemy) factory["Ogre"].DeepClone();
+        IPrototype knightPrototype = (Enemy) factory["Knight"].DeepClone();
+        
+        //4
+        if (ogrePrototype is Enemy ogreEnemy)
         {
-            clonedEnemy.Print();
-            ogre.Name = "Monstrous Ogre";
-            ogre.Damage = 30;
-            ogre.Print();
-            clonedEnemy.Print();
+            ogreEnemy.Print();
         }
-        else
+
+        if (knightPrototype is Enemy knightEnemy)
         {
-            Debug.Log("Failed to clone ogre. Cloned object is not an Enemy...");
+            knightEnemy.Print();
         }
     }
 }

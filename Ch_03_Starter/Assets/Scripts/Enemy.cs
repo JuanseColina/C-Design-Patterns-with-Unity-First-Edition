@@ -13,16 +13,20 @@ public class Enemy : IPrototype
     public string Message;
     public string Name;
 
-    public Enemy(int dmg, string msg, string name)
+    public Item Item;
+
+    public Enemy(int dmg, string msg, string name, Item item)
     {
         Damage = dmg;
         Message = msg;
         Name = name;
+        Item = item;
     }
 
     public void Print()
     {
-        Debug.LogFormat($"{Message}! {Name} can hit for {Damage} HP.");
+        Debug.LogFormat($"{Message}! {Name} has a {Item.Name}" +
+                        $" and can hit for {Damage} HP.");
     }
 
     public IPrototype ShallowClone()
@@ -46,6 +50,10 @@ public class Enemy : IPrototype
 
     public IPrototype DeepClone()
     {
-        return this;
+        Enemy newPrototype = (Enemy) ShallowClone();
+
+        newPrototype.Item = new Item(this.Item.Name);
+
+        return newPrototype;
     }
 }
